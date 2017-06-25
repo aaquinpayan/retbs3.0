@@ -18,7 +18,7 @@ use Yii;
  * @property int $area
  * @property string $market_value
  * @property string $actual_use
- * @property string $assessment_level
+ * @property int $assessment_level
  * @property string $assessed_value
  * @property string $php
  * @property string $total_php
@@ -73,14 +73,15 @@ class TaxDeclaration extends \yii\db\ActiveRecord
             [['property_owner', 'property_index_no', 'arp_no', 'address', 'survey_no', 'classification', 'area', 'market_value', 'actual_use', 'assessment_level', 'assessed_value', 'php', 'total_php', 'effectivity_quarter', 'effectivity_year', 'property_kind', 'location', 'taxability','bound_south', 'bound_north', 'bound_east', 'bound_west', 'mun_assessor', 'prov_assessor'], 'required'],
             [['survey_no', 'area', 'effectivity_quarter', 'effectivity_year', 'cancels_assessed_value', 'lot_no', 'blk_no'], 'default', 'value' => null],
             [['survey_no', 'area', 'effectivity_quarter', 'effectivity_year', 'cancels_assessed_value', 'lot_no', 'blk_no'], 'integer'],
-            [['market_value', 'assessed_value', 'php', 'total_php'], 'number'],
-            [[ 'property_index_no', 'address', 'classification', 'actual_use', 'assessment_level', 'property_kind', 'location', 'taxability', 'faas', 'taxdec', 'cancels_arp_no', 'beneficial_user', 'user_address', 'otc', 'oct', 'bound_south', 'bound_north', 'bound_east', 'bound_west', 'mun_assessor', 'prov_assessor'], 'string', 'max' => 32],
-            [['arp_no', 'viewName'], 'string', 'max' => 128],
+            [['market_value', 'assessed_value', 'php', 'total_php', 'assessed_value'], 'number'],
+            [[ 'property_index_no', 'address', 'classification', 'actual_use', 'property_kind', 'location', 'taxability', 'faas', 'taxdec', 'cancels_arp_no', 'beneficial_user', 'user_address', 'otc', 'oct', 'bound_south', 'bound_north', 'bound_east', 'bound_west', 'mun_assessor', 'prov_assessor'], 'string', 'max' => 255],
+            //[['arp_no', 'viewName'], 'string', 'max' => 128],
+            [['arp_no'], 'string', 'max' => 128],
             [['tel_no', 'user_tel_no', 'date'], 'string', 'max' => 15],
             [['property_owner','tot_assessed_value'], 'string', 'max' => 255],
             [['arp_no'], 'unique'],
             [['property_index_no'], 'unique'],
-            // [['property_owner'], 'unique'],
+            [['property_owner'], 'unique'],
             [['survey_no'], 'unique'],
             [['faas','taxdec'], 'required', 'on'=>'create'],
             // [['faas','taxdec'], 'string', 'skipOnEmpty' => true, 'on'=>'update'],
@@ -97,10 +98,10 @@ class TaxDeclaration extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'td_no' => 'TD ID',
-            'arp_no' => 'TD No/ARP No',
+            //'td_no' => 'TD No',
             'property_owner' => 'Property Owner',
             'property_index_no' => 'Property Index No',
+            'arp_no' => 'ARP No',
             'address' => 'Address',
             'tel_no' => 'Telephone No',
             'survey_no' => 'Survey No',
@@ -118,8 +119,8 @@ class TaxDeclaration extends \yii\db\ActiveRecord
             'property_kind' => 'Kind of Property Assessed',
             'location' => 'Location of Property (No. & Street, Brgy/District, Municipality & Province/City',
             'taxability' => 'Taxability',
-            'faas' => 'FAAS',
-            'taxdec' => 'Tax Declaration',
+            //'faas' => 'FAAS',
+            //'taxdec' => 'Tax Declaration',
             // 'cancels_arp_no' => 'Cancel ARP No.',
             // 'cancels_assessed_value' => 'Cancel Assessed Value',
             'beneficial_user' => 'Administrator/Beneficial User',

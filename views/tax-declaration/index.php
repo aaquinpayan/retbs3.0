@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Breadcrumbs;
+use app\assets\AppAsset;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaxDeclarationSearch */
@@ -12,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tax-declaration-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
     <?php 
         // echo $this->render('_search', ['model' => $searchModel]); ?>
     
@@ -24,14 +27,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function($model) {
+            $url = Url::to(['tax-declaration/view', 'id' => $model['td_no']]);
+            return ['onclick' => "window.location.href='{$url}'"];
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'td_no',
+            //'td_no',
             'arp_no',
             'property_owner',
             'property_index_no',
-            
             'address',
             // 'tel_no',
             // 'survey_no',
@@ -69,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'tax_dec_pdf',
             // 'tax_dec_filename',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

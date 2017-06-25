@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TaxDeclaration */
 
-$this->title = $model->td_no;
+$this->title = $model->arp_no;
 $this->params['breadcrumbs'][] = ['label' => 'Tax Declarations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'td_no',
+            //'td_no',
             'property_owner',
             'property_index_no',
             'arp_no',
@@ -49,8 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'property_kind',
             'location',
             'taxability',
-            'faas',
-            'taxdec',
+            //'faas',
+            //'taxdec',
             // 'cancels_arp_no',
             // 'cancels_assessed_value',
             'beneficial_user',

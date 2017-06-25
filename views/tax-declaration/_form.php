@@ -13,15 +13,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php $taxpayers = ArrayHelper::map(\app\models\Taxpayer::find()->all(), 'full_name', 'full_name'); ?>
+    <!--<?php $taxpayers = ArrayHelper::map(\app\models\Taxpayer::find()->all(), 'full_name', 'full_name'); ?>
 
-        <?= $form->field($model, 'arp_no')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'property_owner')->dropDownList($taxpayers,['options' => ['property_owner' => 'full_name']],['prompt' => "Select Property Owner"]); ?> -->
 
-    <?= $form->field($model, 'property_owner')->dropDownList($taxpayers,['options' => ['property_owner' => 'full_name']],['prompt' => "Select Property Owner"]); ?>
+    <?= $form->field($model, 'property_owner')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'property_index_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'property_index_no')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'arp_no')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'address')->textarea()->label('Address') ?>
 
@@ -37,15 +37,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'actual_use')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'assessment_level')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'assessment_level')->textInput() ?> 
 
+    <!--
     <?= $form->field($model, 'assessed_value')->textInput() ?>
 
     <?= $form->field($model, 'php')->textInput() ?>
 
     <?= $form->field($model, 'total_php')->textInput() ?>
 
-    <!-- <?= $form->field($model, 'tot_assessed_value')->textInput(['maxlength' => true]) ?> -->
+    <?= $form->field($model, 'tot_assessed_value')->textInput(['maxlength' => true]) ?> -->
 
     <?= $form->field($model, 'effectivity_quarter')->textInput() ?>
 

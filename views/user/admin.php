@@ -18,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
     <h3>Manage Administrator</h3>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>  
-        <p>
+        <!--<p>
             <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+        </p>-->
 
         <?=GridView::widget([
             'dataProvider' => $dataProvider,
@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
                 
                 'first_name:ntext',
-            'middle_name:ntext',
-            'last_name:ntext',
+                'middle_name:ntext',
+                'last_name:ntext',
                 'username',
                 'password',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                //['class' => 'yii\grid\ActionColumn'],
             ],
         ]); 
        ?>
