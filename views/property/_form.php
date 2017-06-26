@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
     <?php $taxpayerList = ArrayHelper::map($taxpayer,'full_name', 'full_name') ?>
     <?= $form->field($model, 'name_of_owner')->dropDownList($taxpayerList, ['prompt' => '---- Select Name of Owner ----'])->label('Name of Owner') ?>
 
-    <?= $form->field($model, 'kind')->textInput(['maxlength' => true]) ?>
+    <?php if(1==2) echo $form->field($model, 'kind')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
 

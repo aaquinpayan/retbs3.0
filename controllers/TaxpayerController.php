@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Taxpayer;
 use app\models\TaxpayerSearch;
+use app\models\TaxDeclaration;
+use app\models\TaxDeclarationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,7 +76,12 @@ class TaxpayerController extends Controller
         $model = new Taxpayer();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->full_name = $model->first_name . ' ' . $model->middle_name . ' ' . $model->last_name;
+            // $model->full_name = $model->first_name . ' ' . $model->middle_name . ' ' . $model->last_name;
+            $user = TaxDeclaration::find()
+                ->where(['property_owner' => $model->full_name])
+                ->one();
+
+            $model->address = $user->address;
             if ($model->validate()) {
                 
 

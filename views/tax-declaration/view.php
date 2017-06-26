@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use amilna\elevatezoom\ElevateZoom;
 /* @var $this yii\web\View */
 /* @var $model app\models\TaxDeclaration */
 
-$this->title = $model->td_no;
+$this->title = $model->arp_no;
 $this->params['breadcrumbs'][] = ['label' => 'Tax Declarations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'td_no',
             'property_owner',
+            'first_name',
+            'last_name',
             'property_index_no',
             'arp_no',
             'address',
@@ -51,8 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'taxability',
             'faas',
             'taxdec',
-            // 'cancels_arp_no',
-            // 'cancels_assessed_value',
+            'cancels_arp_no',
+            'cancels_owner',
+            'cancels_assessed_value',
             'beneficial_user',
             'user_tel_no',
             'user_address',
@@ -70,6 +73,18 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'tax_dec_pdf',
             // 'tax_dec_filename',
         ],
-    ]) ?>
+
+    ])    ?>
+
+    <?php
+         $images = [('faas_uploads/' . $model->faas),('taxdec_uploads/' . $model->taxdec)];
+
+        echo ElevateZoom::widget([
+            'images'=>$images,
+            // 'baseUrl'=>Yii::$app->urlManager->baseUrl.'/upload',
+            'smallPrefix'=>'/.thumbs',
+            'mediumPrefix'=>'',
+        ]); 
+    ?>
 
 </div>

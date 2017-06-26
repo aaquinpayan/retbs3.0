@@ -31,7 +31,8 @@ class Taxpayer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'middle_name', 'last_name', 'contact_no', 'gender', 'occupation', 'address', 'payment_status'], 'required'],
+            // [['first_name', 'middle_name', 'last_name', 'contact_no', 'gender', 'occupation', 'address', 'payment_status'], 'required'],
+            [['full_name'], 'required'],
             [['full_name'], 'string', 'max' => 255],
             [['contact_no'], 'string', 'max' => 15],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 20],

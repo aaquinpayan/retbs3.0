@@ -19,6 +19,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'property_owner') ?>
 
+    <?= $form->field($model, 'first_name') ?>
+
+    <?= $form->field($model, 'last_name') ?>
+
     <?= $form->field($model, 'property_index_no') ?>
 
     <?= $form->field($model, 'arp_no') ?>

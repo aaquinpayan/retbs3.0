@@ -19,7 +19,7 @@ class TaxDeclarationSearch extends TaxDeclaration
     {
         return [
             [['td_no', 'survey_no', 'area', 'effectivity_quarter', 'effectivity_year', 'cancels_assessed_value', 'lot_no', 'blk_no'], 'integer'],
-            [['property_owner', 'property_index_no', 'arp_no', 'address', 'tel_no', 'classification', 'actual_use', 'assessment_level', 'tot_assessed_value', 'property_kind', 'location', 'taxability', 'faas', 'cancels_arp_no', 'beneficial_user', 'user_tel_no', 'user_address', 'otc', 'oct', 'date', 'bound_south', 'bound_north', 'bound_east', 'bound_west', 'mun_assessor', 'prov_assessor', 'tax_dec_pdf', 'tax_dec_filename'], 'safe'],
+            [['property_owner', 'property_index_no', 'arp_no', 'address', 'tel_no', 'classification', 'actual_use', 'assessment_level', 'tot_assessed_value', 'property_kind', 'location', 'taxability', 'faas', 'cancels_arp_no', 'beneficial_user', 'user_tel_no', 'user_address', 'otc', 'oct', 'date', 'bound_south', 'bound_north', 'bound_east', 'bound_west', 'mun_assessor', 'prov_assessor', 'tax_dec_pdf', 'tax_dec_filename', 'first_name', 'last_name'], 'safe'],
             [['market_value', 'assessed_value', 'php', 'total_php'], 'number'],
         ];
     }
@@ -75,6 +75,8 @@ class TaxDeclarationSearch extends TaxDeclaration
         ]);
 
         $query->andFilterWhere(['ilike', 'property_owner', $this->property_owner])
+            ->andFilterWhere(['ilike', 'first_name', $this->first_name])
+            ->andFilterWhere(['ilike', 'last_name', $this->last_name])               
             ->andFilterWhere(['ilike', 'property_index_no', $this->property_index_no])
             ->andFilterWhere(['ilike', 'arp_no', $this->arp_no])
             ->andFilterWhere(['ilike', 'address', $this->address])
@@ -88,6 +90,7 @@ class TaxDeclarationSearch extends TaxDeclaration
             ->andFilterWhere(['ilike', 'taxability', $this->taxability])
             ->andFilterWhere(['ilike', 'faas', $this->faas])
             ->andFilterWhere(['ilike', 'cancels_arp_no', $this->cancels_arp_no])
+            ->andFilterWhere(['ilike', 'cancels_owner', $this->cancels_owner])
             ->andFilterWhere(['ilike', 'beneficial_user', $this->beneficial_user])
             ->andFilterWhere(['ilike', 'user_tel_no', $this->user_tel_no])
             ->andFilterWhere(['ilike', 'user_address', $this->user_address])

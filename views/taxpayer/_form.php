@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use kartik\typeahead\TypeaheadBasic;
+use kartik\typeahead\Typeahead;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Taxpayer */
@@ -12,19 +15,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'middle_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'contact_no')->textInput(['maxlength' => true]) ?>
-
-     <?= $form->field($model, 'gender')->radioList(array('Female'=>'Female', 'Male' =>'Male')); ?>
-
-    <?= $form->field($model, 'occupation')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'address')->textarea()->label('Address'); ?>
-
-    <?php echo $form->field($model, 'payment_status')->dropDownList(['Paid' => 'Paid', 'Not Paid' => 'Not Paid']); ?>
+    <?php $data = ArrayHelper::map(\app\models\TaxDeclaration::find()->all(), 'property_owner', 'property_owner');?>
+    <?= $form->field($model, 'full_name')->widget(TypeaheadBasic::className(), [
+            'data' => $data,
+            'pluginOptions' => ['highlight' => true],
+            'options' => ['placeholder' => 'Select Taxpayer'],
+        ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

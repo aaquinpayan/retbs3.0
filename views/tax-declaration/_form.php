@@ -17,8 +17,9 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'arp_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'property_owner')->dropDownList($taxpayers,['options' => ['property_owner' => 'full_name']],['prompt' => "Select Property Owner"]); ?>
-    <?= $form->field($model, 'property_index_no')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+
 
     <?= $form->field($model, 'property_index_no')->textInput(['maxlength' => true]) ?>
 
@@ -57,11 +58,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'taxability')->radioList(array('Taxable'=>'Taxable', 'Exempt'=>'Exempt')); ?>
 
-    
+    <?= $form->field($model, 'cancels_arp_no')->textInput(['maxlength' => true]) ?>
 
-   <!--  <?= $form->field($model, 'cancels_arp_no')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'cancels_assessed_value')->textInput() ?> -->
+    <?= $form->field($model, 'cancels_assessed_value')->textInput() ?>
 
     <?= $form->field($model, 'beneficial_user')->textInput(['maxlength' => true]) ?>
 
@@ -87,10 +86,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'bound_west')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'mun_assessor')->textInput(['maxlength' => true]) ?>
+   <!--  <?= $form->field($model, 'mun_assessor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'prov_assessor')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'prov_assessor')->textInput(['maxlength' => true]) ?> -->
     <!-- <?= $form->field($model, 'tax_dec_pdf')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'tax_dec_filename')->textInput(['maxlength' => true]) ?> -->

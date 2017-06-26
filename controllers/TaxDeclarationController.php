@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\validators\DefaultValueValidator;
 use NumberToWords\NumberToWords;
 
 
@@ -58,9 +59,6 @@ class TaxDeclarationController extends Controller
     public function actionView($id)
     {
         $this->layout = 'admin';
-        // $model = $this->findModel($id);
-        // $num = $model->php*100;
-        // echo "<br/>" . "<br/>" . "<br/>" . $num;
         
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -80,8 +78,12 @@ class TaxDeclarationController extends Controller
         
         if ($model->load(Yii::$app->request->post())) {
             
-
-
+            $model->property_owner =  trim($model->first_name, " ") . ' ' . trim($model->last_name," ");
+            $model->cancels_owner = 'SAME';
+            //  $model->assessment_level = $model->assessment_level / 100;
+            // $model->assessed_value = $model->market_value * $model->assessment_level;
+            // $model->php = $model->assessed_value;
+            // $model->total_php = $model->market_value;
             // create the number to words "manager" class
             $numberToWords = new NumberToWords();
 
@@ -90,23 +92,27 @@ class TaxDeclarationController extends Controller
 
             $num = $model->php*100;
 
-            $model->tot_assessed_value = $currencyTransformer->toWords($num-8, 'PESO');
+            $model->tot_assessed_value = $currencyTransformer->toWords($num, 'PESO');
+            $model->mun_assessor = 'Engr. Ernesto M. Hernandez';
+            $model->prov_assessor = 'Engr. Eduardo B. Cedo, Jr.';
+
+            $model->faas = UploadedFile::getInstance($model, 'faas');
+            $model->taxdec = UploadedFile::getInstance($model, 'taxdec');
+
+                
 
             if ($model->validate()) {
-                $model->faas = UploadedFile::getInstance($model, 'faas');
-                $model->taxdec = UploadedFile::getInstance($model, 'taxdec');
-
                 $model->faas->saveAs('faas_uploads/' . $model->faas->baseName . '.' . $model->faas->extension);
                 $model->taxdec->saveAs('taxdec_uploads/' . $model->taxdec->baseName . '.' . $model->taxdec->extension);
 
                 $model->faas = $model->faas->name;
                 $model->taxdec = $model->taxdec->name;
-
-            }else {
-                // validation failed: $errors is an array containing error messages
-                $errors = $model->errors;
-                print_r( $errors);
             }
+            // }else {
+            //     // validation failed: $errors is an array containing error messages
+            //     $errors = $model->errors;
+            //     print_r( $errors);
+            // }
             // print_r(Yii::$app->request->post());
 
             if ($model->save()) {
@@ -185,7 +191,8 @@ class TaxDeclarationController extends Controller
         $originalTaxdec = $model->taxdec;
 
         if ($model->load(Yii::$app->request->post())) {
-
+            $model->property_owner =  trim($model->first_name, " ") . ' ' . trim($model->last_name," ");
+            $model->cancels_owner = 'SAME';
             $uploadedFaas =  UploadedFile::getInstance($model, 'faas');
             $uploadedTaxdec = UploadedFile::getInstance($model, 'taxdec');
 
@@ -227,7 +234,7 @@ class TaxDeclarationController extends Controller
 
             $num = $model->php*100;
 
-            $model->tot_assessed_value = $currencyTransformer->toWords($num-8, 'PESO');
+            $model->tot_assessed_value = $currencyTransformer->toWords($num, 'PESO');
            
 
             if ($model->save()) {

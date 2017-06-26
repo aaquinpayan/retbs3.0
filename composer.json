@@ -22,7 +22,9 @@
         "kartik-v/yii2-mpdf": "*",
         "phpoffice/phpexcel": "*",
         "kartik-v/yii2-widget-typeahead": "*",
-        "kwn/number-to-words": "~1.2.0"
+        "kwn/number-to-words": "~1.2.0",
+        "amilna/yii2-elevatezoom" : "*",
+        "wbraganca/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
