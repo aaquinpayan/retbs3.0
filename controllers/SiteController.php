@@ -24,7 +24,7 @@ class SiteController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'changepassword'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,7 +62,31 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //if (!Yii::$app->user->isGuest) {
+            return $this->render('index'); 
+        //}else{
+            //return $this->goBack();
+        //}
+    }
+
+    public function actionAdmin()
+    {
+        return $this->render('admin');
+    }
+
+    public function actionAssessor()
+    {
+        return $this->render('assessor');
+    }
+
+    public function actionTreasurer()
+    {
+        return $this->render('treasurer');
+    }
+
+    public function actionTaxpayer()
+    {
+        return $this->render('taxpayer');
     }
 
     /**
@@ -72,17 +96,26 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $model = new LoginForm();
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-
-        // echo "<br/>" . "<br/>" . "<br/>" . $model->username;
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-            //return $this->render('//taxpayer/index');
+            if(Yii::$app->user->identity->user_type == 1){
+                return $this->render('admin');
+            }else if (Yii::$app->user->identity->user_type == 2){
+                return $this->render('assessor');  
+            }else if (Yii::$app->user->identity->user_type == 3){
+                return $this->render('treasurer');  
+            }else if (Yii::$app->user->identity->user_type == 4){
+                return $this->render('taxpayer');  
+            }else{
+                return $this->goHome();
+            }
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -127,11 +160,55 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    public function actionChangepassword(){
+        $model = new PasswordForm();
+        $modeluser = Login::find()->where([
+            'username'=>Yii::$app->user->identity->username
+        ])->one();
+      
+        if($model->load(Yii::$app->request->post())){
+            if($model->validate()){
+                try{
+                    $modeluser->password = $_POST['PasswordForm']['newpass'];
+                    if($modeluser->save()){
+                        Yii::$app->getSession()->setFlash(
+                            'success','Password changed'
+                        );
+                        return $this->redirect(['index']);
+                    }else{
+                        Yii::$app->getSession()->setFlash(
+                            'error','Password not changed'
+                        );
+                        return $this->redirect(['index']);
+                    }
+                }catch(Exception $e){
+                    Yii::$app->getSession()->setFlash(
+                        'error',"{$e->getMessage()}"
+                    );
+                    return $this->render('changepassword',[
+                        'model'=>$model
+                    ]);
+                }
+            }else{
+                return $this->render('changepassword',[
+                    'model'=>$model
+                ]);
+            }
+        }else{
+            return $this->render('changepassword',[
+                'model'=>$model
+            ]);
+        }
+    }
+
+
+
     /**
      * Displays contact page.
      *
      * @return string
      */
+    /*
     public function actionContact()
     {
         $model = new ContactForm();
@@ -143,19 +220,35 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Displays about page.
      *
      * @return string
      */
+    /*
     public function actionAbout()
     {
         return $this->render('about');
     }
+    */
 
-    
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {                
+                $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+
    
 
 }

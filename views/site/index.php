@@ -4,8 +4,8 @@
 
 $this->title = 'Real Estate Tax Billing System';
 ?>
-<div class="site-index">
 
+<div class="site-index">
     <div class="jumbotron">
         <h2>Welcome!</h2>
     </div>
